@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Division Algorithm System</title>
+  <meta name="description" content="A responsive Division Algorithm calculator with saved history, edit, update, and delete features.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Playfair+Display:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <button type="button" class="calculator-shortcut" id="calculatorShortcutBtn" aria-label="Go to calculator">
+    <span class="calculator-shortcut-kicker">Quick Access</span>
+    <span class="calculator-shortcut-title">Open Calculator</span>
+  </button>
+
+  <header class="hero">
+    <div class="container position-relative">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <span class="hero-kicker">Interactive Math System</span>
+          <h1 class="hero-title">Division Algorithm System</h1>
+          <p class="hero-copy mb-4">
+            Start here, then reveal the explanation of the Division Algorithm and explore the profiles
+            before going deeper into the system.
+          </p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-pcc-primary btn-lg" id="getStartedBtn">Get Started</button>
+            <div class="language-switch">
+              <label for="languageSelect" id="languageLabel">Language</label>
+              <select id="languageSelect" class="form-select form-select-sm">
+                <option value="en">English</option>
+                <option value="fil">Filipino</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="zh">Chinese</option>
+                <option value="ja">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="ar">Arabic</option>
+                <option value="hi">Hindi</option>
+                <option value="pt">Portuguese</option>
+                <option value="de">German</option>
+                <option value="id">Indonesian</option>
+                <option value="vi">Vietnamese</option>
+              </select>
+            </div>
+          </div>
+          <div class="hero-insights">
+            <article class="hero-insight">
+              <span class="hero-insight-label">Brief History</span>
+              <p class="hero-insight-copy mb-0">The Division Algorithm has long been used in number theory to describe how every integer can be expressed using a divisor, quotient, and remainder.</p>
+            </article>
+            <article class="hero-insight">
+              <span class="hero-insight-label">Description</span>
+              <p class="hero-insight-copy mb-0">This system turns that idea into an interactive calculator that shows the answer, the explanation, and the saved records in one place.</p>
+            </article>
+            <article class="hero-insight">
+              <span class="hero-insight-label">Quick Facts</span>
+              <p class="hero-insight-copy mb-0">The rule follows `a = bq + r`, the divisor must stay positive, and the remainder must satisfy `0 ≤ r &lt; b`.</p>
+            </article>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="formula-card">
+            <div class="formula-card-label">Core Algorithm</div>
+            <div class="formula-card-formula">a = bq + r</div>
+            <div class="formula-card-subformula">0 &le; r &lt; b</div>
+            <div class="formula-card-note mt-3">
+              A learning tool built to make division visible, organized, and easy to review later.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4 py-lg-5">
+    <div id="feedback" class="alert alert-soft d-none" role="alert" aria-live="polite"></div>
+
+    <section id="introSection" class="panel intro-panel d-none">
+      <div class="intro-shell">
+        <div class="intro-copy">
+          <span class="section-tag">Overview</span>
+          <h2 class="section-title mt-2">What is the Division Algorithm?</h2>
+          <p class="intro-text">
+            The Division Algorithm explains how one number can be divided by another by producing a quotient
+            and a remainder. It guarantees that the remainder is always smaller than the divisor, which makes
+            the result complete and easy to verify.
+          </p>
+          <div class="intro-points">
+            <div class="intro-point">
+              <span>1</span>
+              <p>It shows how the dividend is split into equal parts.</p>
+            </div>
+            <div class="intro-point">
+              <span>2</span>
+              <p>It gives both the quotient and the remainder.</p>
+            </div>
+            <div class="intro-point">
+              <span>3</span>
+              <p>It helps verify if the answer is correct.</p>
+            </div>
+          </div>
+          <div class="intro-actions">
+            <button type="button" class="btn btn-pcc-primary" id="viewTeamBtn">View Profile Cards</button>
+          </div>
+        </div>
+        <div class="intro-side">
+          <div class="formula-card formula-card-light">
+            <div class="formula-card-label">Core Idea</div>
+            <div class="formula-card-formula">a = bq + r</div>
+            <div class="formula-card-subformula">0 &le; r &lt; b</div>
+            <div class="formula-card-note mt-3">
+              The remainder must always stay below the divisor.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="teamSection" class="panel team-panel mt-4">
+      <div class="d-flex flex-wrap gap-2 justify-content-between align-items-start">
+        <div class="section-header">
+          <span class="section-tag">Profiles</span>
+          <h2 class="section-title">Professor and Developer Team</h2>
+        </div>
+        <span class="steps-hint">Click a card to slide the details</span>
+      </div>
+
+      <div class="team-group team-group-professor mt-3">
+        <div class="team-group-header">
+          <h3 class="team-group-title">Professor</h3>
+          <p class="team-group-note mb-0">The assigned professor who guided and requested the system.</p>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-2">
+        <div class="col-12">
+          <article class="member-card member-card-professor" data-member-card>
+            <button type="button" class="member-card-toggle" data-member-toggle aria-expanded="false">
+              <span class="member-visual member-visual-photo">
+                <img src="assets/cely.png" alt="Cely M. Delos Reyes" class="member-photo">
+              </span>
+              <span class="member-card-copy">
+                <span class="member-label">Professor</span>
+                <span class="member-name">Cely M. Delos Reyes</span>
+                <span class="member-note">Professor in charge of the system presentation</span>
+              </span>
+              <span class="member-chevron">+</span>
+            </button>
+            <div class="member-panel" style="display:none;">
+              <div class="member-panel-inner">
+                <div class="member-field">
+                  <span>Name</span>
+                  <strong>Cely M. Delos Reyes</strong>
+                </div>
+                <div class="member-field">
+                  <span>Role</span>
+                  <strong>Professor</strong>
+                </div>
+                <p class="member-description mb-0">
+                  The professor who assigned the project and will receive the final presentation and defense.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="team-group mt-4">
+        <div class="team-group-header">
+          <h3 class="team-group-title">Developer Team</h3>
+          <p class="team-group-note mb-0">Antonio leads the team, while the remaining members support the system build and presentation.</p>
+        </div>
+      </div>
+
+      <div class="row g-3 mt-2">
+        <div class="col-md-6 col-xl-3">
+          <article class="member-card" data-member-card>
+            <button type="button" class="member-card-toggle" data-member-toggle aria-expanded="false">
+              <span class="member-visual member-visual-photo">
+                <img src="assets/tonio.png" alt="Antonio Miguel Sarmiento" class="member-photo">
+              </span>
+              <span class="member-card-copy">
+                <span class="member-label">Team Leader</span>
+                <span class="member-name">Antonio Miguel Sarmiento</span>
+                <span class="member-note">Click to view profile</span>
+              </span>
+              <span class="member-chevron">+</span>
+            </button>
+            <div class="member-panel" style="display:none;">
+              <div class="member-panel-inner">
+                <div class="member-field">
+                  <span>Name</span>
+                  <strong>Antonio Miguel Sarmiento</strong>
+                </div>
+                <div class="member-field">
+                  <span>Profile</span>
+                  <strong>Team Leader</strong>
+                </div>
+                <p class="member-description mb-0">
+                  Leads the team in developing and presenting the Division Algorithm System.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <article class="member-card" data-member-card>
+            <button type="button" class="member-card-toggle" data-member-toggle aria-expanded="false">
+              <span class="member-visual member-visual-photo">
+                <img src="assets/ronald.png" alt="Ronald Trinidad" class="member-photo">
+              </span>
+              <span class="member-card-copy">
+                <span class="member-label">Member</span>
+                <span class="member-name">Ronald Trinidad</span>
+                <span class="member-note">Click to view profile</span>
+              </span>
+              <span class="member-chevron">+</span>
+            </button>
+            <div class="member-panel" style="display:none;">
+              <div class="member-panel-inner">
+                <div class="member-field">
+                  <span>Name</span>
+                  <strong>Ronald Trinidad</strong>
+                </div>
+                <div class="member-field">
+                  <span>Profile</span>
+                  <strong>Member</strong>
+                </div>
+                <p class="member-description mb-0">
+                  Part of the team responsible for building and presenting the system.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <article class="member-card" data-member-card>
+            <button type="button" class="member-card-toggle" data-member-toggle aria-expanded="false">
+              <span class="member-visual member-visual-photo">
+                <img src="assets/ison.png" alt="Jaynielle Zymie Ubaldo" class="member-photo">
+              </span>
+              <span class="member-card-copy">
+                <span class="member-label">Member</span>
+                <span class="member-name">Jaynielle Zymie Ubaldo</span>
+                <span class="member-note">Click to view profile</span>
+              </span>
+              <span class="member-chevron">+</span>
+            </button>
+            <div class="member-panel" style="display:none;">
+              <div class="member-panel-inner">
+                <div class="member-field">
+                  <span>Name</span>
+                  <strong>Jaynielle Zymie Ubaldo</strong>
+                </div>
+                <div class="member-field">
+                  <span>Profile</span>
+                  <strong>Member</strong>
+                </div>
+                <p class="member-description mb-0">
+                  Contributed to the project development and system documentation.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+          <article class="member-card" data-member-card>
+            <button type="button" class="member-card-toggle" data-member-toggle aria-expanded="false">
+              <span class="member-visual member-visual-photo">
+                <img src="assets/comia.png" alt="Comia Alfred" class="member-photo">
+              </span>
+              <span class="member-card-copy">
+                <span class="member-label">Member</span>
+                <span class="member-name">Comia Alfred</span>
+                <span class="member-note">Click to view profile</span>
+              </span>
+              <span class="member-chevron">+</span>
+            </button>
+            <div class="member-panel" style="display:none;">
+              <div class="member-panel-inner">
+                <div class="member-field">
+                  <span>Name</span>
+                  <strong>Comia Alfred</strong>
+                </div>
+                <div class="member-field">
+                  <span>Profile</span>
+                  <strong>Member</strong>
+                </div>
+                <p class="member-description mb-0">
+                  Supported the team in preparing the final system and defense materials.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="row g-4 mt-1">
+      <div class="col-lg-5">
+        <section class="panel calculator-panel h-100" id="calculatorSection">
+          <div class="section-header">
+            <span class="section-tag">Calculator</span>
+            <h2 class="section-title">Solve a Division Problem</h2>
+          </div>
+
+          <form id="divisionForm" class="mt-3" novalidate>
+            <div class="mb-3">
+              <label for="dividend" class="form-label">Dividend (a)</label>
+              <input type="number" class="form-control form-control-lg" id="dividend" name="dividend" placeholder="Enter dividend" step="1" autocomplete="off" required>
+              <div class="form-text">Any integer is allowed.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="divisor" class="form-label">Divisor (b)</label>
+              <input type="number" class="form-control form-control-lg" id="divisor" name="divisor" placeholder="Enter positive divisor" step="1" min="1" autocomplete="off" required>
+              <div class="form-text">The divisor must be a positive integer.</div>
+            </div>
+
+            <div class="d-grid gap-2 d-sm-flex">
+              <button type="submit" class="btn btn-pcc-primary btn-lg flex-grow-1" id="computeBtn">Compute &amp; Save</button>
+              <button type="button" class="btn btn-pcc-outline btn-lg" id="clearBtn">Clear</button>
+            </div>
+          </form>
+
+          <div class="mt-4 helper-box">
+            <div class="helper-title">What happens here</div>
+            <ul class="helper-list">
+              <li>Validates the inputs and blocks division by zero.</li>
+              <li>Computes quotient and remainder using the Division Algorithm.</li>
+              <li>Saves each computation for later review.</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+
+      <div class="col-lg-7">
+        <section id="resultSection" class="panel result-panel h-100" aria-live="polite">
+          <div class="d-flex flex-wrap gap-2 justify-content-between align-items-start">
+            <div class="section-header">
+              <span class="section-tag">Results</span>
+              <h2 class="section-title">Instant Solution</h2>
+            </div>
+            <span class="storage-pill">Saved history</span>
+          </div>
+
+          <div id="resultEmpty" class="empty-state mt-3">
+            <div>
+              <div class="empty-badge">Ready</div>
+              <h3 class="empty-title mt-3">No computation yet</h3>
+              <p class="empty-copy mb-0">
+                Enter a dividend and divisor, then press <strong>Compute &amp; Save</strong> to see the quotient,
+                remainder, and verification steps.
+              </p>
+            </div>
+          </div>
+
+          <div id="resultContent" class="d-none mt-3">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="stat-card">
+                  <div class="stat-label">Dividend</div>
+                  <div class="stat-value" id="currentDividend">-</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat-card">
+                  <div class="stat-label">Divisor</div>
+                  <div class="stat-value" id="currentDivisor">-</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="stat-card">
+                  <div class="stat-label">Verification</div>
+                  <div class="stat-value" id="currentVerification">-</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3 mt-1">
+              <div class="col-md-6">
+                <div class="result-card result-card-primary">
+                  <div class="result-card-label">Quotient (q)</div>
+                  <div class="result-card-value" id="currentQuotient">-</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="result-card result-card-success">
+                  <div class="result-card-label">Remainder (r)</div>
+                  <div class="result-card-value" id="currentRemainder">-</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 formula-breakdown">
+              <div class="formula-breakdown-title">Solved Equation</div>
+              <div id="formulaDisplay" class="formula-breakdown-equation">-</div>
+              <div id="checkDisplay" class="formula-breakdown-note">-</div>
+            </div>
+
+            <div class="mt-4 explanation-card">
+              <div class="formula-breakdown-title">Explanation</div>
+              <div id="explanationBody" class="explanation-body mt-2">-</div>
+              <div class="formula-breakdown-title mt-3">Other Methods</div>
+              <ul id="methodsList" class="methods-list mt-2">
+                <li class="methods-placeholder">Other solving methods will appear here after a computation.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+      <div class="col-12">
+        <section id="stepsSection" class="panel steps-panel">
+          <div class="d-flex flex-wrap gap-2 justify-content-between align-items-start">
+            <div class="section-header">
+              <span class="section-tag">Process</span>
+              <h2 class="section-title">Step-by-Step Solution</h2>
+            </div>
+            <span class="steps-hint">Fade and slide transitions guide the solution</span>
+          </div>
+          <ol id="stepsList" class="steps-list mt-3">
+            <li class="steps-placeholder">Steps will appear here after the first computation.</li>
+          </ol>
+        </section>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+      <div class="col-12">
+        <section id="historySection" class="panel history-panel">
+          <div class="history-toolbar">
+            <div>
+              <span class="section-tag">History</span>
+              <h2 class="section-title mb-1">Saved Computations</h2>
+              <p class="small-note mb-0">Create, read, update, and delete saved computations.</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2 align-items-center">
+              <span id="historyCount" class="history-count">0 records</span>
+              <button type="button" class="btn btn-pcc-outline" id="clearAllBtn">Clear All</button>
+            </div>
+          </div>
+
+          <div class="table-responsive mt-3">
+            <table class="table align-middle history-table mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Dividend</th>
+                  <th scope="col">Divisor</th>
+                  <th scope="col">Quotient</th>
+                  <th scope="col">Remainder</th>
+                  <th scope="col">Saved / Updated</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="historyBody">
+                <tr id="historyEmptyRow">
+                  <td colspan="7" class="history-empty-cell">
+                    No records yet. Computations you save will appear here.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </main>
+
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content edit-modal">
+        <div class="modal-header">
+          <div>
+            <span class="section-tag">Update</span>
+            <h5 class="modal-title mt-1" id="editModalLabel">Edit Saved Computation</h5>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="editAlert" class="alert alert-soft d-none" role="alert"></div>
+          <form id="editForm" novalidate>
+            <input type="hidden" id="editRecordId">
+            <div class="mb-3">
+              <label for="editDividend" class="form-label">Dividend (a)</label>
+              <input type="number" class="form-control" id="editDividend" step="1" required>
+            </div>
+            <div class="mb-3">
+              <label for="editDivisor" class="form-label">Divisor (b)</label>
+              <input type="number" class="form-control" id="editDivisor" step="1" min="1" required>
+            </div>
+            <p class="small-note mb-0">Updating a record recomputes the quotient and remainder automatically.</p>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-pcc-outline" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-pcc-primary" form="editForm">Update Record</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
