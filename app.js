@@ -39,7 +39,7 @@ $(function () {
   const $computeBtn = $("#computeBtn");
   const $clearBtn = $("#clearBtn");
   const $getStartedBtn = $("#getStartedBtn");
-  const $calculatorShortcutBtn = $("#calculatorShortcutBtn");
+  const $calculatorShortcutBtn = $("#calculatorShortcutBtn");  // Now just a link, no click handler needed
   const $viewTeamBtn = $("#viewTeamBtn");
   const $introSection = $("#introSection");
   const $teamSection = $("#teamSection");
@@ -49,7 +49,7 @@ $(function () {
   const $currentDivisor = $("#currentDivisor");
   const $currentQuotient = $("#currentQuotient");
   const $currentRemainder = $("#currentRemainder");
-  const $currentVerification = $("#currentVerification");
+
   const $formulaDisplay = $("#formulaDisplay");
   const $checkDisplay = $("#checkDisplay");
   const $explanationBody = $("#explanationBody");
@@ -171,7 +171,6 @@ $(function () {
         clear: "Clear",
         helperTitle: "What happens here",
         helperItems: [
-          "Validates the inputs and blocks division by zero.",
           "Computes quotient and remainder using the Division Algorithm.",
           "Saves each computation for later review."
         ]
@@ -2603,9 +2602,11 @@ $(function () {
     $card.find(".member-chevron").text(isOpen ? "-" : "+");
 
     if (isOpen) {
-      $panel.stop(true, true).slideDown(220);
+      $panel.css("display", "none").stop(true, true).slideDown(300);
     } else {
-      $panel.stop(true, true).slideUp(220);
+      $panel.stop(true, true).slideUp(300, function () {
+        $panel.css("display", "none");
+      });
     }
   }
 
@@ -2620,30 +2621,7 @@ $(function () {
     return number;
   }
 
-  function validateInputs(dividendValue, divisorValue) {
-    const dividend = parseInteger(dividendValue);
-    const divisor = parseInteger(divisorValue);
 
-    if (dividend === null || divisor === null) {
-      return {
-        valid: false,
-        message: t("messages.invalidNumbers")
-      };
-    }
-
-    if (divisor <= 0) {
-      return {
-        valid: false,
-        message: t("messages.invalidDivisor")
-      };
-    }
-
-    return {
-      valid: true,
-      dividend,
-      divisor
-    };
-  }
 
   function computeDivision(dividend, divisor) {
     const quotient = Math.floor(dividend / divisor);
@@ -2700,9 +2678,13 @@ $(function () {
     $(".hero-title").text(copy.heroTitle);
     $(".hero-copy").text(copy.heroCopy);
     $getStartedBtn.text(copy.getStarted);
+    if ($getStartedBtn.length) {
+      // Only show for index.html
+    }
     $(".calculator-shortcut-kicker").text(copy.calculatorShortcutKicker || "Quick Access");
     $(".calculator-shortcut-title").text(copy.calculatorShortcutTitle || "Open Calculator");
     $calculatorShortcutBtn.attr("aria-label", copy.calculatorShortcutAria || "Go to calculator");
+    // aria-label set on anchor tag, no need to update here
     $("#languageLabel").text(copy.languageLabel);
     SUPPORTED_LANGUAGES.forEach((language) => {
       const label = LANGUAGE_NAMES[language] || language.toUpperCase();
@@ -2730,6 +2712,9 @@ $(function () {
       $(this).text(copy.intro.points[index] || $(this).text());
     });
     $viewTeamBtn.text(copy.intro.viewTeam);
+    if ($viewTeamBtn.length) {
+      // Only show for index.html
+    }
     $("#introSection .formula-card-label").text(copy.intro.coreIdeaLabel);
     $("#introSection .formula-card-note").text(copy.intro.coreIdeaNote);
 
@@ -2868,16 +2853,6 @@ $(function () {
     $currentQuotient.text(record.quotient);
     $currentRemainder.text(record.remainder);
 
-    if (record.verification) {
-      $currentVerification
-        .text(t("result.valid"))
-        .css({ color: "var(--pcc-green)" });
-    } else {
-      $currentVerification
-        .text(t("result.check"))
-        .css({ color: "var(--pcc-red)" });
-    }
-
     $formulaDisplay.html(
       `<div>a = bq + r</div>
        <div class="mt-2">${escapeHtml(t("result.reconstructedLabel"))}: ${escapeHtml(record.dividend)} = ${escapeHtml(record.divisor)} * ${escapeHtml(record.quotient)} + ${escapeHtml(record.remainder)}</div>`
@@ -2909,7 +2884,6 @@ $(function () {
     $currentDivisor.text("-");
     $currentQuotient.text("-");
     $currentRemainder.text("-");
-    $currentVerification.text("-").css({ color: "" });
     $formulaDisplay.text("-");
     $checkDisplay.text("-");
     $explanationBody.text("-");
@@ -3095,13 +3069,28 @@ $(function () {
     hideFeedback();
     clearInlineAlert($editAlert);
 
-    const validation = validateInputs($dividend.val().trim(), $divisor.val().trim());
-    if (!validation.valid) {
-      showFeedback(validation.message, "danger");
+    const dividendVal = $dividend.val().trim();
+    const divisorVal = $divisor.val().trim();
+
+    if (dividendVal === "" || divisorVal === "") {
+      showFeedback("Please enter both dividend and divisor.", "danger");
       return;
     }
 
-    const record = createRecord(validation.dividend, validation.divisor);
+    const dividend = parseInteger(dividendVal);
+    const divisor = parseInteger(divisorVal);
+
+    if (dividend === null || divisor === null) {
+      showFeedback("Please enter valid whole numbers for both dividend and divisor.", "danger");
+      return;
+    }
+
+    if (divisor === 0) {
+      showFeedback("The divisor cannot be zero.", "danger");
+      return;
+    }
+
+    const record = createRecord(dividend, divisor);
     const saved = saveNewRecord(record);
     if (!saved) {
       showFeedback(t("messages.saveStorage"), "danger");
@@ -3140,14 +3129,28 @@ $(function () {
     clearInlineAlert($editAlert);
 
     const recordId = $editRecordId.val();
-    const validation = validateInputs($editDividend.val().trim(), $editDivisor.val().trim());
+    const dividendVal = $editDividend.val().trim();
+    const divisorVal = $editDivisor.val().trim();
 
-    if (!validation.valid) {
-      showInlineAlert($editAlert, validation.message, "danger");
+    if (dividendVal === "" || divisorVal === "") {
+      showInlineAlert($editAlert, "Please enter both dividend and divisor.", "danger");
       return;
     }
 
-    const updateResult = updateExistingRecord(recordId, validation.dividend, validation.divisor);
+    const dividend = parseInteger(dividendVal);
+    const divisor = parseInteger(divisorVal);
+
+    if (dividend === null || divisor === null) {
+      showInlineAlert($editAlert, "Please enter valid whole numbers for both dividend and divisor.", "danger");
+      return;
+    }
+
+    if (divisor === 0) {
+      showInlineAlert($editAlert, "The divisor cannot be zero.", "danger");
+      return;
+    }
+
+    const updateResult = updateExistingRecord(recordId, dividend, divisor);
     if (!updateResult.ok) {
       if (updateResult.reason === "storage") {
         showInlineAlert($editAlert, t("messages.updateStorage"), "danger");
@@ -3163,17 +3166,17 @@ $(function () {
     editModal.hide();
   }
 
-  $getStartedBtn.on("click", function () {
+  // Event handlers for index.html page
+  if ($viewTeamBtn.length) {
+    $viewTeamBtn.on("click", function () {
+      scrollToElement($teamSection);
+    });
+  }
+
+  // Initialize intro section if on index.html
+  if ($("#introSection").length) {
     revealIntroSection();
-  });
-
-  $calculatorShortcutBtn.on("click", function () {
-    scrollToElement($("#calculatorSection"));
-  });
-
-  $viewTeamBtn.on("click", function () {
-    scrollToElement($teamSection);
-  });
+  }
 
   $divisionForm.on("submit", function (event) {
     event.preventDefault();
